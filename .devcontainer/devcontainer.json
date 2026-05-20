@@ -1,0 +1,29 @@
+{
+    "name": "Full Stack PHP Dev Environment",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/var/www/html",
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "bmewburn.vscode-intelephense-client",   // Autocomplétion PHP
+                "meisnate12.codeigniter-4-spark",        // CodeIgniter 4
+                "onecentlin.laravel-blade",              // Laravel Blade (si besoin)
+                "christian-kohler.path-intellisense",   // Chemins de fichiers
+                "steoates.auto-rename-tag",              // HTML intelligent
+                "xdebug.php-debug"                       // Débuggage
+            ],
+            "settings": {
+                "php.suggest.basic": false,              // Désactive l'autocomplétion de base pour laisser Intelephense bosser
+                "intelephense.files.maxSize": 5000000,
+                "composer.executablePath": "/usr/bin/composer"
+            }
+        }
+    },
+    "features": {}, 
+    "postCreateCommand": "composer config --global process-timeout 2000 && composer install --no-dev -o",
+    "remoteUser": "root",
+    "forwardPorts": [8080, 3306]
+    
+}

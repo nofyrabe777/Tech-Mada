@@ -1,0 +1,35 @@
+services:
+  # Serveur PHP + Apache
+  app:
+    build: .
+    container_name: global_php_app
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - dev-network
+
+  # Base de données MySQL
+  db:
+    image: mysql:8.0
+    container_name: global_mysql_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: my_database
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - dev-network
+
+networks:
+  dev-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
