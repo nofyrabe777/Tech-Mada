@@ -67,15 +67,36 @@ document.addEventListener('DOMContentLoaded', function() {
     // ═══════════════════════════════════════════
     const ctxPie = document.getElementById('camembertType');
     if (ctxPie) {
+        // 1. On stocke d'abord tes libellés PHP dans une variable JavaScript
+        const labelsDynamiques = <?= json_encode($camembert_labels ?? ['Aucun']) ?>;
+        
+        // 2. On définit un dictionnaire : "Nom du congé" => "Couleur exacte"
+        // Adapte les noms à gauche pour qu'ils correspondent exactement à ta base de données
+        const couleurParType = {
+            'Congé Annuel': '#2d5a3d',       // Vert TechMada
+            'Congé Maladie': '#c62828',      // Rouge doux
+            'Maladie': '#c62828',            // Sécurité si le libellé court est utilisé
+            'Congé Exceptionnel': '#ef6c00', // Orange
+            'Maternité': '#1565c0',          // Bleu roi
+            'Aucun': '#e5ece8'               // Gris si aucune donnée
+        };
+
+        // 3. On génère dynamiquement le tableau de couleurs dans le bon ordre
+        const backgroundColorDynamique = labelsDynamiques.map(label => {
+            // Si le type de congé existe dans notre dictionnaire, on prend sa couleur,
+            // sinon on met une couleur par défaut (#b8750a)
+            return couleurParType[label] || '#b8750a'; 
+        });
+
         new Chart(ctxPie.getContext('2d'), {
             type: 'pie', // Déclare le mode Camembert
             data: {
-                // Récupère les libellés générés par le contrôleur (ex: ['Congé Annuel', 'Congé Maladie'])
-                labels: <?= json_encode($camembert_labels ?? ['Aucun']) ?>,
+                labels: labelsDynamiques,
                 datasets: [{
-                    // Récupère les nombres associés (ex: [12, 4])
                     data: <?= json_encode($camembert_values ?? [0]) ?>,
-                    backgroundColor: ['#2d5a3d', '#1a4f7a', '#b8750a'], // Palette Forest, Info, Warn
+                    
+                    // CORRECTION : On applique notre tableau de couleurs synchronisé
+                    backgroundColor: backgroundColorDynamique, 
                     borderWidth: 2,
                     borderColor: '#ffffff'
                 }]
