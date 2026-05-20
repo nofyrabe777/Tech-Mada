@@ -48,7 +48,7 @@ class MainSeeder extends Seeder
                 'prenom' => 'Jean',
                 'email' => 'employe@techmada.mg',
                 'password' => password_hash('user123', PASSWORD_DEFAULT),
-                'role' => 'employe', // TRÈS IMPORTANT
+                'role' => 'employe',
                 'departement_id' => 1,
                 'date_embauche' => '2026-03-01'
             ],
@@ -57,11 +57,19 @@ class MainSeeder extends Seeder
                 'prenom' => 'Jean',
                 'email' => 'Administrator@techmada.mg',
                 'password' => password_hash('administrator12', PASSWORD_DEFAULT),
-                'role' => 'admin', // TRÈS IMPORTANT
+                'role' => 'admin',
                 'departement_id' => 1,
                 'date_embauche' => '2026-04-01'
             ],
         ];
-        $this->db->table('employes')->insertBatch($empData);
+
+        // 4. Insertion via le modèle pour déclencher l'attribution des soldes automatiques
+        $employeModel = new \App\Models\EmployeModel();
+        
+        foreach ($empData as $emp) {
+            // Cette ligne insère l'employé ET crée automatiquement ses lignes 
+            // de congé Annuel (30j) et Maladie (5j) dans la table 'soldes' !
+            $employeModel->insert($emp);
+        }
     }
 }
