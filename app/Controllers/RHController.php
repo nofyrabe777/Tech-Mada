@@ -22,4 +22,15 @@ class RHController extends BaseController {
 
         return redirect()->back()->with('success', 'Congé validé.');
     }
+
+    public function refuserConge($id) {
+        $congeModel = new CongeModel();
+        
+        $congeModel->update($id, [
+            'statut' => 'refusee',
+            'traite_par' => session()->get('user')['nom']
+        ]);
+
+        return redirect()->back()->with('success', 'Congé refusé.');
+    }
 }

@@ -36,10 +36,14 @@
                     <td class="mono" style="color: var(--muted); font-size: .82rem;">
                         Du <?= esc($d['date_debut']) ?> au <?= esc($d['date_fin']) ?>
                     </td>
-                    <td style="text-align: right;">
+                    <td style="text-align: right; display: flex; gap: 0.5rem; justify-content: flex-end;">
                         <a href="<?= base_url('rh/valider/'.$d['id']) ?>" 
                            class="btn-sm" style="background: var(--success-bg); color: var(--success); border-color: var(--success-br)">
                             <i class="bi bi-check2"></i> Approuver
+                        </a>
+                        <a href="<?= base_url('rh/refuser/'.$d['id']) ?>" 
+                           class="btn-sm" style="background: #fee2e2; color: #dc2626; border-color: #fecaca">
+                            <i class="bi bi-x"></i> Refuser
                         </a>
                     </td>
                 </tr>

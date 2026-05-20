@@ -18,6 +18,7 @@ $routes->group('employer', ['filter' => 'auth'], function($routes){
 $routes->group('rh', ['filter' => 'auth'], function($routes) {
     $routes->get('demandes', 'RHController::dashboardRH'); 
     $routes->get('valider/(:num)', 'RHController::validerConge/$1'); // GET pour le bouton simple
+    $routes->get('refuser/(:num)', 'RHController::refuserConge/$1'); // GET pour refuser
 });
 
 $routes->group('admin', ['filter' => 'role:admin'], function($routes) {
