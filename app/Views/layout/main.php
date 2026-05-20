@@ -91,12 +91,26 @@
         </div>
         <div class="sidebar-section">Navigation</div>
         <ul class="sidebar-nav">
+            <li>
+                <a href="<?= base_url('employer/dashboard') ?>" class="<?= url_is('employer/dashboard') ? 'active' : '' ?>">
+                    <i class="bi bi-calendar3"></i> Mes Congés
+                </a>
+            </li>
+
+            <?php if (session()->get('user')['role'] === 'rh'): ?>
+                <li>
+                    <a href="<?= base_url('rh/demandes') ?>" class="<?= url_is('rh/demandes') ? 'active' : '' ?>">
+                        <i class="bi bi-hourglass-split"></i> Demandes RH
+                    </a>
+                </li>
+            <?php endif; ?>
+
             <?php if (session()->get('user')['role'] === 'admin'): ?>
-                <li><a href="<?= base_url('admin/utilisateurs') ?>" class="<?= url_is('admin/*') ? 'active' : '' ?>"><i class="bi bi-people"></i> Collaborateurs</a></li>
-            <?php elseif (session()->get('user')['role'] === 'rh'): ?>
-                <li><a href="<?= base_url('rh/dashboard') ?>" class="<?= url_is('rh/*') ? 'active' : '' ?>"><i class="bi bi-hourglass-split"></i> Demandes RH</a></li>
-            <?php else: ?>
-                <li><a href="<?= base_url('employer/dashboard') ?>" class="<?= url_is('employer/*') ? 'active' : '' ?>"><i class="bi bi-grid-1x2"></i> Mes Congés</a></li>
+                <li>
+                    <a href="<?= base_url('admin/utilisateurs') ?>" class="<?= url_is('admin/*') ? 'active' : '' ?>">
+                        <i class="bi bi-people"></i> Collaborateurs
+                    </a>
+                </li>
             <?php endif; ?>
         </ul>
         <div class="sidebar-user">

@@ -5,7 +5,7 @@ use App\Models\CongeModel;
 use App\Models\SoldeModel;
 
 class CongeController extends BaseController {
-    
+     
     public function index() {
         $congeModel = new \App\Models\CongeModel();
         $soldeModel = new \App\Models\SoldeModel();
@@ -24,7 +24,7 @@ class CongeController extends BaseController {
         $dateDebut = $this->request->getPost('date_debut');
         $dateFin = $this->request->getPost('date_fin');
 
-        // Calcul du nombre de jours
+        // calcule des soldes de congé restant 
         $start = new \DateTime($dateDebut);
         $end = new \DateTime($dateFin);
         $diff = $start->diff($end);
@@ -32,10 +32,10 @@ class CongeController extends BaseController {
 
         $insertData = [
             'employe_id'    => session()->get('user')['id'], 
-            'type_conge_id' => $this->request->getPost('type_id'), 
+            'type_conge_id' => $this->request->getPost('type_conge_id'), //  CORRECTION ICI (match avec le HTML)
             'date_debut'    => $dateDebut,
             'date_fin'      => $dateFin,
-            'nb_jours'      => $nbJours, // ON AJOUTE CETTE LIGNE
+            'nb_jours'      => $nbJours, 
             'statut'        => 'en_attente',
             'traite_par'    => 'Non traité' 
         ];

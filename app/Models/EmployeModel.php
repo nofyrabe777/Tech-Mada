@@ -11,6 +11,8 @@ class EmployeModel extends Model {
         'email' => 'required|valid_email|is_unique[employes.email,id,{id}]',
         'password' => 'required|min_length[5]'
     ];
+
+    protected $afterInsert = ['attribuerSoldesParDefaut'];
     
     
     public function getEmployesWithDept() {
